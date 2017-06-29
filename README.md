@@ -1,5 +1,5 @@
 # Client
-坑
+坑    
 **凡是包含中文的参数值，必须用URLEncode再传**    
 **密码进行md5 加密再认证传输**   
 
@@ -516,28 +516,34 @@ order 中的一些参数说明
 ### 返回 ###
 成功   
 
-	[
-	    {
-	        "order_id": 1972057522,
-	        "worker_id": 1,
-	        "user_id": 1,
-	        "order_time": "2017-06-29 09:35:34.823",
-	        "start_time": "2011-02-22",
-	        "end_time": "2014-05-12",
-	        "phone": "18819259257",
-	        "address": "广州",
-	        "isPayed": 0,
-	        "valid": 1,
-	        "isDeal": 0,
-	        "message": ""
-	    }
-	]
+	{
+	    "status": "success",
+	    "list": [
+	        {
+	            "order_id": 1972057522,
+	            "worker_id": 1,
+	            "user_id": 1,
+	            "order_time": "2017-06-29 09:35:34.823",
+	            "start_time": "2011-02-22",
+	            "end_time": "2014-05-12",
+	            "phone": "18819259257",
+	            "address": "广州",
+	            "isPayed": 0,
+	            "valid": 1,
+	            "isDeal": 0,
+	            "message": ""
+	        }
+	    ]
+	}
 	
 返回所有没有处理的订单   
 
 失败   
 
-	{"status":"success","list": []}
+	{
+	    "status": "error",
+	    "list": []
+	}
 
 ## 处理订单 ##
 
@@ -567,6 +573,16 @@ order 中的一些参数说明
 	    "message": ""
 	}
 返回最新订单   
+
+
+
+
+
+
+
+	
+
+
 
 
 
