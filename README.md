@@ -1,5 +1,3 @@
-# Client
-坑    
 **凡是包含中文的参数值，必须用URLEncode再传**    
 **密码进行md5 加密再认证传输**   
 
@@ -337,7 +335,7 @@ type的可选值
 	]
 
 ### 新增订单 ###
-[http://localhost:8080/AddOrder?order={"order_id":0,"worker_id":1,"user_id":1,"start_time":"2011-02-22","end_time":"2014-05-12","phone":"18819259257","address":"广州","isPayed":0,"valid":1,"isDeal":0,"message":""}](http://localhost:8080/AddOrder?order={"order_id":0,"worker_id":1,"user_id":1,"start_time":"2011-02-22","end_time":"2014-05-12","phone":"18819259257","address":"广州","isPayed":0,"valid":1,"isDeal":0,"message":""})
+[http://localhost:8080/AddOrder?order={"order_id":0,"worker_id":1,"user_id":1,"start_time":"2017-12-16","end_time":"2017-12-2","phone":"18819259257","address":"广州","price":45.0,"isPayed":0,"valid":1,"isDeal":0,"message":""}](http://localhost:8080/AddOrder?order={"order_id":0,"worker_id":1,"user_id":1,"start_time":"2017-12-16","end_time":"2017-12-2","phone":"18819259257","address":"广州","price":45.0,"isPayed":0,"valid":1,"isDeal":0,"message":""})   
 
 #### 参数 ####
 
@@ -345,124 +343,130 @@ type的可选值
 	
 		
 		
-		import java.sql.Timestamp;
 		
-		/**
-		 * Created by jinxiong on 2017/6/28.
-		 */
-		    public class Order {
+		public class Order {
 		
-		        private int order_id;//不需要填
-		        private int worker_id;//必填
-		        private int user_id;//必填
-		        private String order_time;//不要填
-		        private String start_time;//必填
-		        private String end_time;//必填
-		        private String phone;//必填
-		        private String address;//必填
-		
-		        private int isPayed;//0 没有支付，默认是0
-		        private int valid = 1;//订单是否有效 1为有效
-		        private int isDeal = 0;//是否已经处理了 ,默认是0
-		
-		        private String message;//可选
-		
-		        public int getIsDeal() {
-		            return isDeal;
-		        }
-		
-		        public void setIsDeal(int isDeal) {
-		            this.isDeal = isDeal;
-		        }
-		
-		        public int getOrder_id() {
-		            return order_id;
-		        }
-		
-		        public void setOrder_id(int order_id) {
-		            this.order_id = order_id;
-		        }
-		
-		        public int getWorker_id() {
-		            return worker_id;
-		        }
-		
-		        public void setWorker_id(int worker_id) {
-		            this.worker_id = worker_id;
-		        }
-		
-		        public int getUser_id() {
-		            return user_id;
-		        }
-		
-		        public void setUser_id(int user_id) {
-		            this.user_id = user_id;
-		        }
-		
-		        public String getOrder_time() {
-		            return order_time;
-		        }
-		
-		        public void setOrder_time(String order_time) {
-		            this.order_time = order_time;
-		        }
-		
-		        public String getStart_time() {
-		            return start_time;
-		        }
-		
-		        public void setStart_time(String start_time) {
-		            this.start_time = start_time;
-		        }
-		
-		        public String getEnd_time() {
-		            return end_time;
-		        }
-		
-		        public void setEnd_time(String end_time) {
-		            this.end_time = end_time;
-		        }
-		
-		        public String getPhone() {
-		            return phone;
-		        }
-		
-		        public void setPhone(String phone) {
-		            this.phone = phone;
-		        }
-		
-		        public String getAddress() {
-		            return address;
-		        }
-		
-		        public void setAddress(String address) {
-		            this.address = address;
-		        }
-		
-		        public int getIsPayed() {
-		            return isPayed;
-		        }
-		
-		        public void setIsPayed(int isPayed) {
-		            this.isPayed = isPayed;
-		        }
-		
-		    public int getValid() {
-		        return valid;
-		    }
-		
-		    public void setValid(int valid) {
-		        this.valid = valid;
-		    }
-		
-		    public String getMessage() {
-		        return message;
-		    }
-		
-		    public void setMessage(String message) {
-		        this.message = message;
-		    }
-		}
+			    private int order_id;//不需要填
+			    private int worker_id;//必填
+			    private int user_id;//必填
+			    private String order_time;//不要填
+			    private String start_time;//必填
+			    private String end_time;//必填
+			    private String phone;//必填
+			    private String address;//必填
+			    private float price;//必填，根据开始天数和结束天数还有护工的工资计算
+			
+			    private int isPayed;//0 没有支付，默认是0
+			    private int valid = 1;//订单是否有效 1为有效
+			    private int isDeal = 0;//是否已经处理了 ,默认是0
+			
+			    private String message = "";//可选
+			
+			
+			    public float getPrice() {
+			        return price;
+			    }
+			
+			    public void setPrice(float price) {
+			        this.price = price;
+			    }
+			
+			    public int getIsDeal() {
+			        return isDeal;
+			    }
+			
+			    public void setIsDeal(int isDeal) {
+			        this.isDeal = isDeal;
+			    }
+			
+			    public int getOrder_id() {
+			        return order_id;
+			    }
+			
+			    public void setOrder_id(int order_id) {
+			        this.order_id = order_id;
+			    }
+			
+			    public int getWorker_id() {
+			        return worker_id;
+			    }
+			
+			    public void setWorker_id(int worker_id) {
+			        this.worker_id = worker_id;
+			    }
+			
+			    public int getUser_id() {
+			        return user_id;
+			    }
+			
+			    public void setUser_id(int user_id) {
+			        this.user_id = user_id;
+			    }
+			
+			    public String getOrder_time() {
+			        return order_time;
+			    }
+			
+			    public void setOrder_time(String order_time) {
+			        this.order_time = order_time;
+			    }
+			
+			    public String getStart_time() {
+			        return start_time;
+			    }
+			
+			    public void setStart_time(String start_time) {
+			        this.start_time = start_time;
+			    }
+			
+			    public String getEnd_time() {
+			        return end_time;
+			    }
+			
+			    public void setEnd_time(String end_time) {
+			        this.end_time = end_time;
+			    }
+			
+			    public String getPhone() {
+			        return phone;
+			    }
+			
+			    public void setPhone(String phone) {
+			        this.phone = phone;
+			    }
+			
+			    public String getAddress() {
+			        return address;
+			    }
+			
+			    public void setAddress(String address) {
+			        this.address = address;
+			    }
+			
+			    public int getIsPayed() {
+			        return isPayed;
+			    }
+			
+			    public void setIsPayed(int isPayed) {
+			        this.isPayed = isPayed;
+			    }
+			
+			    public int getValid() {
+			        return valid;
+			    }
+			
+			    public void setValid(int valid) {
+			        this.valid = valid;
+			    }
+			
+			    public String getMessage() {
+			        return message;
+			    }
+			
+			    public void setMessage(String message) {
+			        this.message = message;
+			    }
+			}
 
 
 上面类中的必填项必须填写      
@@ -485,14 +489,15 @@ order 中的一些参数说明
 
 
 	{
-	    "order_id": 244585709,
+	    "order_id": 717868220,
 	    "worker_id": 1,
 	    "user_id": 1,
-	    "order_time": "Jun 29, 2017 9:16:40 AM",
-	    "start_time": "2011-02-22",
-	    "end_time": "2014-05-12",
+	    "order_time": "2017-06-29 11:05:14.452",
+	    "start_time": "2017-12-16",
+	    "end_time": "2017-12-2",
 	    "phone": "18819259257",
 	    "address": "广州",
+	    "price": 45,
 	    "isPayed": 0,
 	    "valid": 1,
 	    "isDeal": 0,
@@ -520,14 +525,30 @@ order 中的一些参数说明
 	    "status": "success",
 	    "list": [
 	        {
-	            "order_id": 1972057522,
+	            "order_id": 717868220,
 	            "worker_id": 1,
 	            "user_id": 1,
-	            "order_time": "2017-06-29 09:35:34.823",
-	            "start_time": "2011-02-22",
-	            "end_time": "2014-05-12",
+	            "order_time": "2017-06-29 11:05:14.452",
+	            "start_time": "2017-12-16",
+	            "end_time": "2017-12-2",
 	            "phone": "18819259257",
 	            "address": "广州",
+	            "price": 45,
+	            "isPayed": 0,
+	            "valid": 1,
+	            "isDeal": 0,
+	            "message": ""
+	        },
+	        {
+	            "order_id": 1839270655,
+	            "worker_id": 1,
+	            "user_id": 1,
+	            "order_time": "2017-06-29 11:01:59.551",
+	            "start_time": "2017-12-16",
+	            "end_time": "2017-12-2",
+	            "phone": "18819259257",
+	            "address": "广州",
+	            "price": 45,
 	            "isPayed": 0,
 	            "valid": 1,
 	            "isDeal": 0,
@@ -559,14 +580,15 @@ order 中的一些参数说明
 
 	
 	{
-	    "order_id": 1972057522,
+	    "order_id": 2098884487,
 	    "worker_id": 1,
 	    "user_id": 1,
-	    "order_time": "2017-06-29 09:35:34.823",
-	    "start_time": "2011-02-22",
-	    "end_time": "2014-05-12",
+	    "order_time": "2017-06-29 10:55:27.765",
+	    "start_time": "2017-12-16",
+	    "end_time": "2017-12-2",
 	    "phone": "18819259257",
 	    "address": "广州",
+	    "price": 45,
 	    "isPayed": 0,
 	    "valid": 1,
 	    "isDeal": 1,
@@ -574,22 +596,50 @@ order 中的一些参数说明
 	}
 返回最新订单   
 
+## 返回所有已经处理了的订单 ##
+
+[http://localhost:8080/GetAllOrders](http://localhost:8080/GetAllOrders)   
+
+### 返回数据 ###
 
 
+	[
+	    {
+	        "order_id": 2098884487,
+	        "worker_id": 1,
+	        "user_id": 1,
+	        "order_time": "2017-06-29 10:55:27.765",
+	        "start_time": "2017-12-16",
+	        "end_time": "2017-12-2",
+	        "phone": "18819259257",
+	        "address": "广州",
+	        "price": 45,
+	        "isPayed": 0,
+	        "valid": 1,
+	        "isDeal": 1,
+	        "message": ""
+	    }
+	]
 
+## 根据userId 返回用户数据 ##
 
+[http://localhost:8080/GetUserById?id=1](http://localhost:8080/GetUserById?id=1)     
 
+### 返回数据 ###
 
+	{
+	    "status": "success",
+	    "user": {
+	        "userId": 1,
+	        "userName": "",
+	        "password": "123456789",
+	        "address": "",
+	        "phoneNumber": "12345678774",
+	        "pay_password": "456798",
+	        "status": 1
+	    }
+	}
+
+不存在此用户      
 	
-
-
-
-
-
-
-
-
-
-	
-
-
+	{"status":"error","user":{}}
