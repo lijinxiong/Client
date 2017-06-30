@@ -1,631 +1,34 @@
-**凡是包含中文的参数值，必须用URLEncode再传**    
-**密码进行md5 加密再认证传输**   
+请求方式皆为： **post**      
 
+# 用户相关 #
+## 注册用户 ##
 
-### 用户注册 ###
-[http://xxx.xxx.xx/addUser?password=123645&phone=12345678774](http://localhost:8080/addUser?password=123645&phone=12345678774)      
+url：[http://localhost:8080/addUser?password=789464&phone=18819259258](http://localhost:8080/addUser?password=789464&phone=18819259258)      
 
-#### 参数说明####
+  
+
+参数说明     
+
+- phone：11位纯数字手机号码    
+- password ： MD5 加密后再传，长度大于6 小于16 必须包含字母和数字(客户端验证)    
+
+返回    
+成功:  
 	
-*方式* :**post**
-
-- password ：客户端判断密码长度大于6，小于16，必须包含字母和数字，进行md5加密后再传给后台    
-- phone ：手机号码，保证11位数字再传给后台   
-
-#### 返回数据： ####
-**json：注册是否成功，相同号码只能注册一次**
-
-例子：    
-成功
-	
-	{"status": "success"}
+	{"status": "success"}     
 失败    
 
-	{"status": "error"}   
+	{"status": "error"}    
+## 用户登录 ##
 
-### 用户登录 ###
+url:[http://localhost:8080/UserLogin?phone=12345678774&password=123456789](http://localhost:8080/UserLogin?phone=12345678774&password=123456789)      
 
-[http://xxx.xx.xx/UserLogin?phone=12345678774&password=123](http://localhost:8080/UserLogin?phone=12345678774&password=123)    
+参数说明    
 
-#### 参数说明：  ####
+- phone ：11位纯数字手机号码    
+- password ： MD5 加密后再传，长度大于6 小于16 必须包含字母和数字(客户端验证)       
 
-*方式*:**post**     
-
-- phone:手机号码：保证11位数字再传给后台       
-- password ：密码，用户输入的密码，用md5加密之后再传给后台     
-
-#### 返回数据 ####
-**json:成功就返回当前用户的信息，失败返回不包含当前用户的信息**
-
-例子：  
-成功   
-
-	{
-	    "status": "success",
-	    "user": {
-	        "userId": 1,
-	        "userName": "",
-	        "password": "123645",
-	        "address": "",
-	        "phoneNumber": "12345678774",
-	        "pay_password": "",
-	        "status": 1
-	    }
-	}
-其中**user.status**为1代表着账号已经处于登陆状态，否则就不是登陆状态.应该将登陆成功的客户信息保存在本地        
-
-失败     
-	
-	{
-	    "status": "error",
-	    "user": {
-	        "userId": 0,
-	        "userName": "",
-	        "password": "",
-	        "address": "",
-	        "phoneNumber": "",
-	        "pay_password": "",
-	        "status": 0
-	    }
-	}
-
-### 修改登录密码 ###
-[http://xxx.xx.xx/ModifyPassword?phone=12345678774&newPassword=abc&oldPassword=789d456](http://localhost:8080/ModifyPassword?phone=12345678774&newPassword=abc&oldPassword=789d456)     
-
-#### 参数说明 ####
-
-*方式*：**post**     
-
-- phone：手机号码，保证11位数字再传给后台     
-- newPassword:新密码，客户端判断密码长度大于6，小于16，必须包含字母和数字，进行md5加密后再传给后台    
-- oldPassword：旧密码,先跟本地保存的客户密码就行匹配，匹配成功才传给后台    
-
-#### 返回数据 ####
-**json:返回最新的密码，不管成功否，都会返回最新的文档**
-
-例子      
-成功  
-
-	{
-	    "status": "success",
-	    "password": "123456789"
-	}
-失败   
-
-	
-	{
-	    "status": "error",
-	    "password": "123645"
-	}
-### 获取支付密码 ###
-[http://xxx.xx.xx/GetPayPassword?phone=12345678774](http://localhost:8080/GetPayPassword?phone=12345678774)       
-
-#### 参数说明 ####
-*方式：post*    
-
-- phone 手机号码：返回该用户的支付密码    
-
-**必须是在登陆状态的用户才能调用此方法**
-
-#### 返回数据 ####
-**json，假如当前用户没有设置支付密码，*payPassword*的值就会是""
-
-例子    
-没有设置支付密码
-
-	{
-	    "status": "success",
-	    "payPassword": ""
-	}
-
-
-设置了支付密码   
-	
-	{
-	    "status": "success",
-	    "payPassword": "456798"
-	}
-
-### 修改支付密码 ###
-
-[http://xxx.xxx.xx/ModifyPayPassword?oldPayPassword=&newPayPassword=123456&phone=12345678774](http://localhost:8080/ModifyPayPassword?oldPayPassword=&newPayPassword=123456&phone=12345678774)    
-
-#### 参数说明 ####
-
-*方式:post*     
-
-- oldPassword：旧的支付密码，客户端对本地保存的进行匹配后再传给后台    
-- newPassword:新的支付密码，需要**6位纯数字**    
-- phone：当前登陆的账号    
-
-#### 返回数据 ####
-**Json，返回最新的支付密码**    
-
-例子：   
-	
-	{
-	    "status": "error",
-	    "payPassword": ""
-	}       
-	
-或者   
-	
-	{
-	    "status": "error",
-	    "payPassword": "456789"
-	}	
-
-
-### 增加护工 ###
-
-[http://xxx.xxx.xx/addCareWorker?name=%E6%9D%8E%E9%94%A6%E9%9B%84&age=12&gender=1&introduce=&phone=123456789&dayWage=12&hourWage=12](http://localhost:8080/addCareWorker?name=%E6%9D%8E%E9%94%A6%E9%9B%84&age=12&gender=1&introduce=&phone=123456789&dayWage=12&hourWage=12)    
-
-#### 参数说明 ####
-
-**方式:post**    
-
-- name 护工的名字，必须先进行百分制编码    
-
-		name = URLEncoder.encode(name, "utf-8");
-- age 年龄，int 类型   
-- gender 性别 1为男，0为女 ，int 类型   
-- introduce:个人介绍，**可选**，String类型     
-- phone手机号码    
-- dayWage 按天数计算多少工资  int类型   跟hourWage 不能同时为null  
-- hourWage 按小时计算工资 int类型		跟dayWage 不能同时为null     
-
-#### 返回数据 ####
-**json是否增加成功，同一个phone只能对应一个护工**   
-
-例子    
 成功    
-	
-	{
-	    "status": "success"
-	}
-失败    
-
-	{
-	    "status": "error"
-	}
-
-### 根据条件查询护工查询护工 ###
-
-[http://xx.xx.xx/GetWorker?type=GENDER&gender=1](http://localhost:8080/GetWorker?type=xxx&xxx=xx&xxx=xx)   
-
-#### 参数说明 ####
-
-**方式：post**   
-
-type的可选值    
-
-- AGE 根据年龄筛选护工    
-- GENDER 根据性别筛选护工   
-- HOUR_WAGE 根据小时工资筛选护工    
-- DAY_WAGE 根据天工资筛选护工   
-
-#### 根据年龄查询 ####
-[http://localhost:8080/GetWorker?type=AGE&min=&max=](http://localhost:8080/GetWorker?type=AGE&min=&max=)    
-
-#### 参数说明 ####
-
-- max 查询年龄的上限，可选，默认不写是100 int类型    
-- min 查询年龄的下限 ，可选，默认不写是0 ，int 类型   
-
-
-例子
-	
-	[
-	    {
-	        "worker_id": 1,
-	        "name": "李锦雄",
-	        "age": 12,
-	        "gender": 1,
-	        "introduce": "",
-	        "phone": "123456789",
-	        "day_wage": 12,
-	        "hour_wage": 12
-	    },
-	    {
-	        "worker_id": 2,
-	        "name": "李锦雄",
-	        "age": 12,
-	        "gender": 1,
-	        "introduce": "",
-	        "phone": "124456789",
-	        "day_wage": 12,
-	        "hour_wage": 12
-	    }
-	]
-或者  
- 
-	[]
-
-#### 根据时/天工资查询 ####
-
-[http://localhost:8080/GetWorker?type=DAY_WAGE&min=0&max=](http://localhost:8080/GetWorker?type=DAY_WAGE&min=0&max=)
-
-#### 参数说明 ####
-
-- min 跟查询年龄一样   
-- max 跟查询年龄一样   
-
-例子   
-
-	[
-	    {
-	        "worker_id": 1,
-	        "name": "李锦雄",
-	        "age": 12,
-	        "gender": 1,
-	        "introduce": "",
-	        "phone": "123456789",
-	        "day_wage": 12,
-	        "hour_wage": 12
-	    },
-	    {
-	        "worker_id": 2,
-	        "name": "李锦雄",
-	        "age": 12,
-	        "gender": 1,
-	        "introduce": "",
-	        "phone": "124456789",
-	        "day_wage": 12,
-	        "hour_wage": 12
-	    }
-	]
-#### 根据性别查询 ####
-[http://localhost:8080/GetWorker?type=GENDER&gender=1](http://localhost:8080/GetWorker?type=GENDER&gender=1)     
-
-参数说明：			
-
-- gender 1为男人   0 为 女人   	
-
-
-		[
-		    {
-		        "worker_id": 1,
-		        "name": "李锦雄",
-		        "age": 12,
-		        "gender": 1,
-		        "introduce": "",
-		        "phone": "123456789",
-		        "day_wage": 12,
-		        "hour_wage": 12
-		    },
-		    {
-		        "worker_id": 2,
-		        "name": "李锦雄",
-		        "age": 12,
-		        "gender": 1,
-		        "introduce": "",
-		        "phone": "124456789",
-		        "day_wage": 12,
-		        "hour_wage": 12
-		    }
-		]
-	
-### 获取所有护工 ###
-
-[http://localhost:8080/GetAllCareWorker](http://localhost:8080/GetAllCareWorker)    
-
-返回数据    
-	
-	[
-	    {
-	        "worker_id": 1,
-	        "name": "李锦雄",
-	        "age": 12,
-	        "gender": 1,
-	        "introduce": "",
-	        "phone": "123456789",
-	        "day_wage": 12,
-	        "hour_wage": 12
-	    },
-	    {
-	        "worker_id": 2,
-	        "name": "李锦雄",
-	        "age": 12,
-	        "gender": 1,
-	        "introduce": "",
-	        "phone": "124456789",
-	        "day_wage": 12,
-	        "hour_wage": 12
-	    }
-	]
-
-### 新增订单 ###
-[http://localhost:8080/AddOrder?order={"order_id":0,"worker_id":1,"user_id":1,"start_time":"2017-12-16","end_time":"2017-12-2","phone":"18819259257","address":"广州","price":45.0,"isPayed":0,"valid":1,"isDeal":0,"message":""}](http://localhost:8080/AddOrder?order={"order_id":0,"worker_id":1,"user_id":1,"start_time":"2017-12-16","end_time":"2017-12-2","phone":"18819259257","address":"广州","price":45.0,"isPayed":0,"valid":1,"isDeal":0,"message":""})   
-
-#### 参数 ####
-
-- order  String 类型， 
-	
-		
-		
-		
-		public class Order {
-		
-			    private int order_id;//不需要填
-			    private int worker_id;//必填
-			    private int user_id;//必填
-			    private String order_time;//不要填
-			    private String start_time;//必填
-			    private String end_time;//必填
-			    private String phone;//必填
-			    private String address;//必填
-			    private float price;//必填，根据开始天数和结束天数还有护工的工资计算
-			
-			    private int isPayed;//0 没有支付，默认是0
-			    private int valid = 1;//订单是否有效 1为有效
-			    private int isDeal = 0;//是否已经处理了 ,默认是0
-			
-			    private String message = "";//可选
-			
-			
-			    public float getPrice() {
-			        return price;
-			    }
-			
-			    public void setPrice(float price) {
-			        this.price = price;
-			    }
-			
-			    public int getIsDeal() {
-			        return isDeal;
-			    }
-			
-			    public void setIsDeal(int isDeal) {
-			        this.isDeal = isDeal;
-			    }
-			
-			    public int getOrder_id() {
-			        return order_id;
-			    }
-			
-			    public void setOrder_id(int order_id) {
-			        this.order_id = order_id;
-			    }
-			
-			    public int getWorker_id() {
-			        return worker_id;
-			    }
-			
-			    public void setWorker_id(int worker_id) {
-			        this.worker_id = worker_id;
-			    }
-			
-			    public int getUser_id() {
-			        return user_id;
-			    }
-			
-			    public void setUser_id(int user_id) {
-			        this.user_id = user_id;
-			    }
-			
-			    public String getOrder_time() {
-			        return order_time;
-			    }
-			
-			    public void setOrder_time(String order_time) {
-			        this.order_time = order_time;
-			    }
-			
-			    public String getStart_time() {
-			        return start_time;
-			    }
-			
-			    public void setStart_time(String start_time) {
-			        this.start_time = start_time;
-			    }
-			
-			    public String getEnd_time() {
-			        return end_time;
-			    }
-			
-			    public void setEnd_time(String end_time) {
-			        this.end_time = end_time;
-			    }
-			
-			    public String getPhone() {
-			        return phone;
-			    }
-			
-			    public void setPhone(String phone) {
-			        this.phone = phone;
-			    }
-			
-			    public String getAddress() {
-			        return address;
-			    }
-			
-			    public void setAddress(String address) {
-			        this.address = address;
-			    }
-			
-			    public int getIsPayed() {
-			        return isPayed;
-			    }
-			
-			    public void setIsPayed(int isPayed) {
-			        this.isPayed = isPayed;
-			    }
-			
-			    public int getValid() {
-			        return valid;
-			    }
-			
-			    public void setValid(int valid) {
-			        this.valid = valid;
-			    }
-			
-			    public String getMessage() {
-			        return message;
-			    }
-			
-			    public void setMessage(String message) {
-			        this.message = message;
-			    }
-			}
-
-
-上面类中的必填项必须填写      
-	
-	
-        Gson gson = new Gson();
-        Order order = new Order();
-		//根据用户输入设置一些order的属性
-		//......
-		String order = gson.toJson(order);
-上面的*order*就能直接作为参数传过去  
-
-order 中的一些参数说明      
-
-- start-time(end-time)：格式必须是yyyy-mm-dd格式     
-- phone 手机号码，不能为空，纯数字  
-- address 不能为空    
-    
-### 返回数据 ###
-
-
-	{
-	    "order_id": 717868220,
-	    "worker_id": 1,
-	    "user_id": 1,
-	    "order_time": "2017-06-29 11:05:14.452",
-	    "start_time": "2017-12-16",
-	    "end_time": "2017-12-2",
-	    "phone": "18819259257",
-	    "address": "广州",
-	    "price": 45,
-	    "isPayed": 0,
-	    "valid": 1,
-	    "isDeal": 0,
-	    "message": ""
-	}
-
-
-## 管理员登陆 ##
-
-[http://localhost:8080/ManagerLogin?id=12345678&password=12345678](http://localhost:8080/ManagerLogin?id=12345678&password=12345678)     
-
-### 参数 ###
-
-- id:管理员id(8位char)
-- password:md5加密后的密码    
-
-### 请求方式 ###
-
-**post**    
-
-### 返回 ###
-成功   
-
-	{
-	    "status": "success",
-	    "list": [
-	        {
-	            "order_id": 717868220,
-	            "worker_id": 1,
-	            "user_id": 1,
-	            "order_time": "2017-06-29 11:05:14.452",
-	            "start_time": "2017-12-16",
-	            "end_time": "2017-12-2",
-	            "phone": "18819259257",
-	            "address": "广州",
-	            "price": 45,
-	            "isPayed": 0,
-	            "valid": 1,
-	            "isDeal": 0,
-	            "message": ""
-	        },
-	        {
-	            "order_id": 1839270655,
-	            "worker_id": 1,
-	            "user_id": 1,
-	            "order_time": "2017-06-29 11:01:59.551",
-	            "start_time": "2017-12-16",
-	            "end_time": "2017-12-2",
-	            "phone": "18819259257",
-	            "address": "广州",
-	            "price": 45,
-	            "isPayed": 0,
-	            "valid": 1,
-	            "isDeal": 0,
-	            "message": ""
-	        }
-	    ]
-	}
-	
-返回所有没有处理的订单   
-
-失败   
-
-	{
-	    "status": "error",
-	    "list": []
-	}
-
-## 处理订单 ##
-
-
-[http://localhost:8080/DealOrder?order=1972057522&deal=1](http://localhost:8080/DealOrder?orderId=1972057522&deal=1)   
-
-### 参数说明 ###
-
-- orderId order的id     
-- deal 是否已经处理了 ，1为处理了    
-
-### 返回参数 ###
-
-	
-	{
-	    "order_id": 2098884487,
-	    "worker_id": 1,
-	    "user_id": 1,
-	    "order_time": "2017-06-29 10:55:27.765",
-	    "start_time": "2017-12-16",
-	    "end_time": "2017-12-2",
-	    "phone": "18819259257",
-	    "address": "广州",
-	    "price": 45,
-	    "isPayed": 0,
-	    "valid": 1,
-	    "isDeal": 1,
-	    "message": ""
-	}
-返回最新订单   
-
-## 返回所有已经处理了的订单 ##
-
-[http://localhost:8080/GetAllOrders](http://localhost:8080/GetAllOrders)   
-
-### 返回数据 ###
-
-
-	[
-	    {
-	        "order_id": 2098884487,
-	        "worker_id": 1,
-	        "user_id": 1,
-	        "order_time": "2017-06-29 10:55:27.765",
-	        "start_time": "2017-12-16",
-	        "end_time": "2017-12-2",
-	        "phone": "18819259257",
-	        "address": "广州",
-	        "price": 45,
-	        "isPayed": 0,
-	        "valid": 1,
-	        "isDeal": 1,
-	        "message": ""
-	    }
-	]
-
-## 根据userId 返回用户数据 ##
-
-[http://localhost:8080/GetUserById?id=1](http://localhost:8080/GetUserById?id=1)     
-
-### 返回数据 ###
 
 	{
 	    "status": "success",
@@ -638,8 +41,634 @@ order 中的一些参数说明
 	        "pay_password": "456798",
 	        "status": 1
 	    }
+	}     
+失败  
+
+	{
+	    "status": "error",
+	    "user": {}
 	}
 
-不存在此用户      
+*status:* 为1 表示处于登陆状态，0则相反    
+
+## 用户退出登录 ##
+
+url:[http://localhost:8080/UserLogout?id=2](http://localhost:8080/UserLogout?id=2)     
+
+参数说明   
+
+- id 用户id    
+
+返回    
+成功
+
+	{
+	    "status": "success"
+	}
+用户id不存在   
 	
-	{"status":"error","user":{}}
+	{"status":"error"}
+
+## 修改登录密码 ##
+
+url:[http://localhost:8080/ModifyPassword?phone=12345678774&newPassword=abc&oldPassword=789d456](http://localhost:8080/ModifyPassword?phone=12345678774&newPassword=abc&oldPassword=789d456)     
+
+参数说明    
+
+- phone 11位纯数字手机号码      
+- newPassword  新密码    MD5 加密后再传，长度大于6 小于16 必须包含字母和数字(客户端验证)      
+- oldPassword 旧密码，客户端先验证是否与本地保存的密码相同 再md5加密传     
+
+返回     
+成功    
+
+	{
+	    "status": "success",
+	    "password": "abc"
+	}
+失败    
+
+	{"status": "error","password":"123456789"}
+*成功失败都会返回最新的密码*     
+
+## 修改支付密码 ##
+
+url ： [http://localhost:8080/ModifyPayPassword?oldPayPassword=&newPayPassword=123456&phone=12345678774](http://localhost:8080/ModifyPayPassword?oldPayPassword=&newPayPassword=123456&phone=12345678774)   
+
+参数说明    
+
+- phone  11位纯数字手机号码        
+- oldPayPassword 旧的支付密码 可以为空，假设用户没有设定，6位纯数字组成(客户端验证)需要MD5加密      
+- newPayPassword ：新的支付密码  6位纯数字 ，md5 加密    
+
+返回    
+成功      
+
+	{
+	    "status": "success",
+	    "payPassword": "123456"
+	}
+失败    
+
+	{
+	    "status": "error",
+	    "payPassword": "456798"
+	}
+
+*都返回最新的支付密码*     
+
+## 修改用户信息 ##
+
+url ： [http://localhost:8080/ModifyInfo?id=1&userName=xianyu&address=China](http://localhost:8080/ModifyInfo?id=1&userName=xianyu&address=China)    
+
+参数说明    
+
+- id  用户id    
+- userName **可选参数** 新修改的用户名字，用URLEncode进行utf-8编码后再进行传输    
+- address **可选参数** 新修改的用户名字，用URLEncode进行utf-8编码后再进行传输       
+
+返回    
+成功    
+	
+	{
+	    "status": "success",
+	    "user": {
+	        "userId": 1,
+	        "userName": "xianyu",
+	        "password": "abc",
+	        "address": "China",
+	        "phoneNumber": "12345678774",
+	        "pay_password": "123456",
+	        "status": 1
+	    }
+	}
+
+失败(用户id不存在)       
+	
+	{
+	    "status": "error",
+	    "user": {}
+	}
+
+## 获取支付密码 ##
+
+url ：[http://localhost:8080/GetPayPassword?phone=12345678774](http://localhost:8080/GetPayPassword?phone=12345678774)      
+
+参数说明  
+
+- phone  11位纯数字手机号码          
+
+返回    
+
+成功   
+	
+	{
+	    "status": "success",
+	    "payPassword": "123456"
+	}
+失败(phone 不存在/没有处于登陆状态)    
+
+	{"status": "error","payPassword":""}    
+
+## 根据手机号码获取用户信息 ##
+
+url ：[http://localhost:8080/GetUserInfo?phone=12345678774](http://localhost:8080/GetUserInfo?phone=12345678774)      
+
+
+参数说明  
+
+- phone  11位纯数字手机号码        
+
+返回    
+成功    
+
+	{
+	    "status": "success",
+	    "user": {
+	        "userId": 1,
+	        "userName": "xianyu",
+	        "password": "abc",
+	        "address": "China",
+	        "phoneNumber": "12345678774",
+	        "pay_password": "123456",
+	        "status": 1
+	    }
+	}	
+失败     
+
+	{
+	    "status": "error",
+	    "user": {}
+	}
+
+## 根据用户id获取用户信息 ##
+url [http://localhost:8080/GetUserById?id=1](http://localhost:8080/GetUserById?id=1)    
+
+参数说明   
+
+- id 用户id   
+
+返回   
+成功   
+
+	{
+	    "status": "success",
+	    "user": {
+	        "userId": 1,
+	        "userName": "xianyu",
+	        "password": "abc",
+	        "address": "China",
+	        "phoneNumber": "12345678774",
+	        "pay_password": "123456",
+	        "status": 1
+	    }
+	}
+失败(id不存在)     
+
+	 {
+	    "status": "error",
+	    "user": {}
+	}
+
+# 管理相关 #
+## 管理员登陆 ##
+url [http://localhost:8080/ManagerLogin?id=12345678&password=12345678](http://localhost:8080/ManagerLogin?id=12345678&password=12345678)     
+
+参数说明   
+
+- id 管理员id    
+- password 密码   
+
+返回    
+成功 返回没有处理的订单(isDeal = 0 代表没处理)   
+	
+	{
+	    "status": "success",
+	    "list": [
+	        {
+	            "order_id": 1985173349,
+	            "worker_id": 1,
+	            "user_id": 1,
+	            "order_time": "2017-06-29 15:38:36.798",
+	            "start_time": "2017-12-16",
+	            "end_time": "2017-12-2",
+	            "phone": "18819259257",
+	            "address": "广州",
+	            "price": 45,
+	            "isPayed": 0,
+	            "valid": 1,
+	            "isDeal": 0,
+	            "message": ""
+	        },
+	        {
+	            "order_id": 1987021255,
+	            "worker_id": 1,
+	            "user_id": 1,
+	            "order_time": "2017-06-29 15:38:38.864",
+	            "start_time": "2017-12-16",
+	            "end_time": "2017-12-2",
+	            "phone": "12345678978",
+	            "address": "广州",
+	            "price": 45,
+	            "isPayed": 0,
+	            "valid": 1,
+	            "isDeal": 0,
+	            "message": ""
+	        }
+	    ]
+	}
+
+失败(没此id / 密码错误)      
+
+	{
+	    "status": "error",
+	    "list": []
+	}
+
+# 订单相关 #
+## 获取所有已经处理订单 ##
+url：[http://localhost:8080/GetAllDealOrders](http://localhost:8080/GetAllDealOrders)       
+
+返回   
+成功有订单 
+
+
+		[
+	    {
+	        "order_id": 1985173349,
+	        "worker_id": 1,
+	        "user_id": 1,
+	        "order_time": "2017-06-29 15:38:36.798",
+	        "start_time": "2017-12-16",
+	        "end_time": "2017-12-2",
+	        "phone": "18819259257",
+	        "address": "广州",
+	        "price": 45,
+	        "isPayed": 0,
+	        "valid": 1,
+	        "isDeal": 1,
+	        "message": ""
+	    },
+	    {
+	        "order_id": 1987021255,
+	        "worker_id": 1,
+	        "user_id": 1,
+	        "order_time": "2017-06-29 15:38:38.864",
+	        "start_time": "2017-12-16",
+	        "end_time": "2017-12-2",
+	        "phone": "12345678978",
+	        "address": "广州",
+	        "price": 45,
+	        "isPayed": 0,
+	        "valid": 1,
+	        "isDeal": 1,
+	        "message": ""
+	    }
+	]
+没有订单
+
+	[]
+## 支付订单 ##
+
+url ：[http://localhost:8080/PayOrder?orderId=1985173349&userId=1](http://localhost:8080/PayOrder?orderId=1985173349&userId=1)     
+
+参数说明   
+
+- orderId 订单id
+- userId 用户id    
+
+返回    
+成功     
+
+
+	{
+	    "status": "success",
+	    "order": {
+	        "order_id": 1985173349,
+	        "worker_id": 1,
+	        "user_id": 1,
+	        "order_time": "2017-06-29 15:38:36.798",
+	        "start_time": "2017-12-16",
+	        "end_time": "2017-12-2",
+	        "phone": "18819259257",
+	        "address": "广州",
+	        "price": 45,
+	        "isPayed": 1,
+	        "valid": 1,
+	        "isDeal": 0,
+	        "message": ""
+	    }
+	}  
+
+status 值说明    
+- null 订单id 不存在   
+- invalid 订单已经被取消   
+- payed 订单已经在之前支付过   
+- success 成功支付了    
+
+## 取消订单 ##
+
+url ：[http://localhost:8080/CancelOrder?orderId=1318522461&userId=1](http://localhost:8080/CancelOrder?orderId=1318522461&userId=1)    
+
+参数说明   
+
+- orderId 订单id    
+- userId 用户id   
+
+返回    
+
+	{
+	    "status": "success",
+	    "order": {
+	        "order_id": 1985173349,
+	        "worker_id": 1,
+	        "user_id": 1,
+	        "order_time": "2017-06-29 15:38:36.798",
+	        "start_time": "2017-12-16",
+	        "end_time": "2017-12-2",
+	        "phone": "18819259257",
+	        "address": "广州",
+	        "price": 45,
+	        "isPayed": 0,
+	        "valid": 0,
+	        "isDeal": 0,
+	        "message": ""
+	    }
+	}
+
+status *说明*      
+
+- success 成功取消订单(包含退款)    
+- error 用户id为null 或者没有处于登陆状态    
+- null 订单不存在      
+
+## 获取所有/支付/未支付的订单 ##
+
+url [http://localhost:8080/GetAllOrder?id=1&type=2](http://localhost:8080/GetAllOrder?id=1&type=2)     
+
+参数说明   
+
+- id 用户id    
+- type 
+
+	1.  为0 获取 没有支付了的订单  
+	2.  为1 获取	支付了的订单    
+	3.  为2 获取所有的订单    
+
+返回    
+	
+	[
+	    {
+	        "order_id": 1985173349,
+	        "worker_id": 1,
+	        "user_id": 1,
+	        "order_time": "2017-06-29 15:38:36.798",
+	        "start_time": "2017-12-16",
+	        "end_time": "2017-12-2",
+	        "phone": "18819259257",
+	        "address": "广州",
+	        "price": 45,
+	        "isPayed": 0,
+	        "valid": 0,
+	        "isDeal": 0,
+	        "message": ""
+	    },
+	    {
+	        "order_id": 1987021255,
+	        "worker_id": 1,
+	        "user_id": 1,
+	        "order_time": "2017-06-29 15:38:38.864",
+	        "start_time": "2017-12-16",
+	        "end_time": "2017-12-2",
+	        "phone": "12345678978",
+	        "address": "广州",
+	        "price": 45,
+	        "isPayed": 0,
+	        "valid": 1,
+	        "isDeal": 0,
+	        "message": ""
+	    }
+	]
+
+## 处理订单 ##
+
+url ：[http://localhost:8080/DealOrder?orderId=1985173349&deal=1](http://localhost:8080/DealOrder?orderId=1985173349&deal=1)     
+
+参数说明    
+	
+- orderId 订单id    
+- deal  1为处理  0 为没处理    
+
+返回   
+成功   
+
+	{
+	    "order_id": 1985173349,
+	    "worker_id": 1,
+	    "user_id": 1,
+	    "order_time": "2017-06-29 15:38:36.798",
+	    "start_time": "2017-12-16",
+	    "end_time": "2017-12-2",
+	    "phone": "18819259257",
+	    "address": "广州",
+	    "price": 45,
+	    "isPayed": 0,
+	    "valid": 0,
+	    "isDeal": 1,
+	    "message": ""
+	}	
+订单不存在   
+	
+	{}
+
+## 删除订单 ##
+
+url [http://localhost:8080/DeleteOrder?id=1318522461](http://localhost:8080/DeleteOrder?id=1318522461)      
+
+参数说明   
+- id  订单id    
+
+返回   
+订单不存在    
+	
+	{
+	    "status": "null",
+	    "order": {}
+	}
+成功   
+	
+	{
+	    "status": "success",
+	    "order": {
+	        "order_id": 1985173349,
+	        "worker_id": 1,
+	        "user_id": 1,
+	        "order_time": "2017-06-29 15:38:36.798",
+	        "start_time": "2017-12-16",
+	        "end_time": "2017-12-2",
+	        "phone": "18819259257",
+	        "address": "广州",
+	        "price": 45,
+	        "isPayed": 0,
+	        "valid": 0,
+	        "isDeal": 1,
+	        "message": ""
+	    }
+	}
+
+## 修改订单 ##
+
+url [http://localhost:8080/ModifyOrder?id=1987021255&phone=12345678978](http://localhost:8080/ModifyOrder?id=1987021255&phone=12345678978)     
+
+参数说明   
+
+- id 订单id  
+- phone 订单中手机号码**可选**   
+- address 订单中的地址  **可选**  URLEncode utf-8 编码之后再传    
+- message 订单说明   **可选**  URLEncode utf-8 编码之后再传    
+
+返回最新的订单信息      
+ 
+	{
+	    "status": "success",
+	    "order": {
+	        "order_id": 1987021255,
+	        "worker_id": 1,
+	        "user_id": 1,
+	        "order_time": "2017-06-29 15:38:38.864",
+	        "start_time": "2017-12-16",
+	        "end_time": "2017-12-2",
+	        "phone": "12345678978",
+	        "address": "广州",
+	        "price": 45,
+	        "isPayed": 0,
+	        "valid": 1,
+	        "isDeal": 0,
+	        "message": ""
+	    }
+	}
+ 
+## 增加订单 ##
+
+url [http://localhost:8080/AddOrder?order={"order_id":0,"worker_id":1,"user_id":1,"start_time":"2017-12-16","end_time":"2017-12-2","phone":"18819259257","address":"广州","price":45.0,"isPayed":0,"valid":1,"isDeal":0,"message":""}](http://localhost:8080/AddOrder?order={"order_id":0,"worker_id":1,"user_id":1,"start_time":"2017-12-16","end_time":"2017-12-2","phone":"18819259257","address":"广州","price":45.0,"isPayed":0,"valid":1,"isDeal":0,"message":""})    
+
+参数说明   
+
+- order  客户端生成Order 类的对象 用Gson 生成字符串 ，  
+	**注意的是 Order对象中的message 和 address 要用URLEncode 编码之后再用Gson 生成字符串**   
+
+Order 类  
+	
+	public class Order {
+
+	    private int order_id;//不需要填
+	    private int worker_id;//必填
+	    private int user_id;//必填
+	    private String order_time;//不要填
+	    private String start_time;//必填
+	    private String end_time;//必填
+	    private String phone;//必填
+	    private String address;//必填
+	    private float price;//必填，根据开始天数和结束天数还有护工的工资计算
+	
+	    private int isPayed;//0 没有支付，默认是0
+	    private int valid = 1;//订单是否有效 1为有效
+	    private int isDeal = 0;//是否已经处理了 ,默认是0
+	
+	    private String message = "";//可选
+		
+		//对应各个属性的get 方法和set 方法 
+		// ......
+		//.....
+		
+	}
+		Gson gson = new Gson();
+		String str = gson.toJson(order);	
+		//.....
+		//....
+
+返回   
+成功    
+	
+	{
+	    "order_id": 1997677335,
+	    "worker_id": 1,
+	    "user_id": 1,
+	    "order_time": "2017-06-30 10:59:44.601",
+	    "start_time": "2017-12-16",
+	    "end_time": "2017-12-2",
+	    "phone": "18819259257",
+	    "address": "广州",
+	    "price": 45,
+	    "isPayed": 0,
+	    "valid": 1,
+	    "isDeal": 0,
+	    "message": ""
+	}
+失败   
+
+	{}
+
+## 根据订单id获取订单详细 ##
+
+url [http://localhost:8080/GetOrderById?id=1987021255](http://localhost:8080/GetOrderById?id=1987021255)     
+
+参数说明  
+- id 订单id    
+
+返回   
+	
+	{
+	    "status": "success",
+	    "order": {
+	        "order_id": 1987021255,
+	        "worker_id": 1,
+	        "user_id": 1,
+	        "order_time": "2017-06-29 15:38:38.864",
+	        "start_time": "2017-12-16",
+	        "end_time": "2017-12-2",
+	        "phone": "12345678978",
+	        "address": "广州",
+	        "price": 45,
+	        "isPayed": 0,
+	        "valid": 1,
+	        "isDeal": 0,
+	        "message": ""
+	    }
+	}
+失败   
+	
+	{
+	    "status": "null",
+	    "order": {
+	       
+	    }
+	}
+
+# 护工相关 #
+
+## 增加护工 ##
+
+url [http://localhost:8080/addCareWorker?name=%E6%9D%8E%E9%94%A6%E9%9B%84&age=12&gender=1&introduce=&phone=123456788&dayWage=12&hourWage=12](http://localhost:8080/addCareWorker?name=%E6%9D%8E%E9%94%A6%E9%9B%84&age=12&gender=1&introduce=&phone=123456788&dayWage=12&hourWage=12)     
+
+参数说明    
+
+- name 护工名字   URLEncode utf-8 编码后再传    
+- age 年龄 int  
+- gender  1 为男 0 为 女   
+- introduce 个人介绍**可选**   
+- phone 护工手机号码    
+- dayWage 每天工资 int  和时薪不能同时为null  
+- hourWage 时薪  int 和日薪不能同时为null   
+
+返回   
+成功  
+	
+	{
+	    "status": "success"
+	}
+失败
+
+	{
+	    "status": "error"
+	}
