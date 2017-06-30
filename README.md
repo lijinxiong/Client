@@ -672,3 +672,257 @@ url [http://localhost:8080/addCareWorker?name=%E6%9D%8E%E9%94%A6%E9%9B%84&age=12
 	{
 	    "status": "error"
 	}
+
+## 删去护工 ##
+url [http://localhost:8080/DeleteWorker?id=4](http://localhost:8080/DeleteWorker?id=4)     
+
+参数说明   
+- id 护工id
+
+返回    
+成功    
+
+	{
+	    "status": "success",
+	    "worker": {
+	        "worker_id": 4,
+	        "name": "李锦雄",
+	        "age": 12,
+	        "gender": 1,
+	        "introduce": "",
+	        "phone": "123456788",
+	        "day_wage": 12,
+	        "hour_wage": 12
+	    }
+	}
+
+护工id 不存在    
+	
+	{
+	    "status": "null",
+	    "worker": {}
+	}
+
+## 根据条件获得护工 ##
+
+参数说明    
+- type  
+	1. AGE 根据年龄查询护工    
+	2. GENDER 根据性别查询护工   
+	3. HOUR_WAGE 根据时薪查询护工   
+	4. DAY_WAGE 根据日薪查询护工  
+- min 下限   不填为0   
+- max 上限   不填为100
+
+### 性别 ###
+
+url  [http://localhost:8080/GetWorker?type=GENDER&gender=1](http://localhost:8080/GetWorker?type=GENDER&gender=1)   
+
+参数说明    
+1 代表 男 0 代表 女
+
+
+返回
+有数据   
+
+
+	[
+	    {
+	        "worker_id": 1,
+	        "name": "李锦雄",
+	        "age": 12,
+	        "gender": 1,
+	        "introduce": "",
+	        "phone": "123456789",
+	        "day_wage": 12,
+	        "hour_wage": 12
+	    }
+	]
+
+没数据   
+	
+	[]
+
+### 年龄 ###
+
+url  [http://localhost:8080/GetWorker?type=AGE&min=&max=45](http://localhost:8080/GetWorker?type=AGE&min=&max=45)       
+
+参数说明     
+- min 最低年龄**可选**   
+- max 最大年龄**可选**    
+
+	
+返回     
+	
+	[
+	    {
+	        "worker_id": 1,
+	        "name": "李锦雄",
+	        "age": 12,
+	        "gender": 1,
+	        "introduce": "",
+	        "phone": "123456789",
+	        "day_wage": 12,
+	        "hour_wage": 12
+	    }
+	]
+或者   
+	
+	[]    
+
+### 时薪 ###
+
+url [http://localhost:8080/GetWorker?type=HOUR_WAGE&min=&max=](http://localhost:8080/GetWorker?type=HOUR_WAGE&min=&max=)      
+
+参数说明    
+
+- min 最低时薪 **可选**    
+- max 最高时薪 **可选**    
+
+返回     
+	
+	[
+	    {
+	        "worker_id": 1,
+	        "name": "李锦雄",
+	        "age": 12,
+	        "gender": 1,
+	        "introduce": "",
+	        "phone": "123456789",
+	        "day_wage": 12,
+	        "hour_wage": 12
+	    }
+	]
+或者   
+	
+	[]  
+
+### 日薪 ###
+
+url  [http://localhost:8080/GetWorker?type=DAY_WAGE&min=&max=](http://localhost:8080/GetWorker?type=DAY_WAGE&min=&max=)     
+
+参数说明   
+- min 最低日薪 **可选**
+- max 最高日薪  **可选**   
+
+返回     
+	
+	[
+	    {
+	        "worker_id": 1,
+	        "name": "李锦雄",
+	        "age": 12,
+	        "gender": 1,
+	        "introduce": "",
+	        "phone": "123456789",
+	        "day_wage": 12,
+	        "hour_wage": 12
+	    }
+	]
+或者   
+	
+	[]     
+
+## 修改护工的信息 ##
+
+url    
+http://localhost:8080/ModifyWorker?worker={"worker_id": 1,"name": "李锦雄","age": 21,"gender": 1,"introduce": "","phone": "18819259257","day_wage": 16,"hour_wage": 12}      
+
+参数说明   
+
+- worker CareWorker 类对象的json 字符串
+
+
+CareWorker 类  
+
+
+	private int worker_id;
+    private String name="";
+    private int age;
+    private int gender;
+    private String introduce;
+    private String phone;
+    private int day_wage;
+    private int hour_wage;
+	//对应的get 和set 方法
+
+	
+返回   
+成功 
+
+	
+	{
+	    "status": "success",
+	    "worker": {
+	        "worker_id": 1,
+	        "name": "李锦雄",
+	        "age": 21,
+	        "gender": 1,
+	        "introduce": "",
+	        "phone": "18819259257",
+	        "day_wage": 16,
+	        "hour_wage": 12
+	    }
+	}
+
+失败   
+
+	{
+	    "status": "error",
+	    "worker": {
+	    
+	    }
+	}
+
+## 获取所有的护工 ##
+
+[http://localhost:8080/GetAllCareWorker](http://localhost:8080/GetAllCareWorker)     
+
+返回    
+
+	[
+	    {
+	        "worker_id": 1,
+	        "name": "李锦雄",
+	        "age": 21,
+	        "gender": 1,
+	        "introduce": "",
+	        "phone": "18819259257",
+	        "day_wage": 16,
+	        "hour_wage": 12
+	    }
+	]
+
+## 根据护工 id 返回护工信息 ##
+
+[http://localhost:8080/GetWorkerById?id=1](http://localhost:8080/GetWorkerById?id=1)     
+
+参数说明   
+
+- id  护工id  
+
+
+返回   
+
+	{
+	    "status": "success",
+	    "user": {
+	        "worker_id": 1,
+	        "name": "李锦雄",
+	        "age": 21,
+	        "gender": 1,
+	        "introduce": "",
+	        "phone": "18819259257",
+	        "day_wage": 16,
+	        "hour_wage": 12
+	    }
+	}
+
+失败    
+
+	{
+	    "status": "error",
+	    "user": {
+	        
+	    }
+	}
