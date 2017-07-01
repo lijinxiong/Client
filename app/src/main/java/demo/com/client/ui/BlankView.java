@@ -1,10 +1,8 @@
-package demo.com.client.view;
+package demo.com.client.ui;
 
 import android.app.Activity;
 
 import java.lang.ref.WeakReference;
-
-import demo.com.client.interfaces.IView;
 
 
 public class BlankView implements IView {
@@ -26,6 +24,11 @@ public class BlankView implements IView {
 
     @Override
     public void showData(Object data) {
+
+    }
+
+    @Override
+    public void showError(String error) {
 
     }
 }

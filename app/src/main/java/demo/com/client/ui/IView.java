@@ -1,8 +1,5 @@
-package demo.com.client.interfaces;
+package demo.com.client.ui;
 
-/**
- * Created by jinxiong on 2017/6/26.
- */
 
 public interface IView {
 
@@ -17,5 +14,7 @@ public interface IView {
 
     void showData(Object data);
 
+    //加载数据错误
+    void showError(String error);
 
 }
