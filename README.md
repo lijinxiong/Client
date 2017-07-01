@@ -293,41 +293,43 @@ url：[http://localhost:8080/GetAllDealOrders](http://localhost:8080/GetAllDealO
 成功有订单 
 
 
-		[
-	    {
-	        "order_id": 1985173349,
-	        "worker_id": 1,
-	        "user_id": 1,
-	        "order_time": "2017-06-29 15:38:36.798",
-	        "start_time": "2017-12-16",
-	        "end_time": "2017-12-2",
-	        "phone": "18819259257",
-	        "address": "广州",
-	        "price": 45,
-	        "isPayed": 0,
-	        "valid": 1,
-	        "isDeal": 1,
-	        "message": ""
-	    },
-	    {
-	        "order_id": 1987021255,
-	        "worker_id": 1,
-	        "user_id": 1,
-	        "order_time": "2017-06-29 15:38:38.864",
-	        "start_time": "2017-12-16",
-	        "end_time": "2017-12-2",
-	        "phone": "12345678978",
-	        "address": "广州",
-	        "price": 45,
-	        "isPayed": 0,
-	        "valid": 1,
-	        "isDeal": 1,
-	        "message": ""
-	    }
-	]
+		{
+	    "list": [
+	        {
+	            "order_id": 1987021255,
+	            "worker_id": 1,
+	            "user_id": 1,
+	            "order_time": "2017-06-29 15:38:38.864",
+	            "start_time": "2017-12-16",
+	            "end_time": "2017-12-2",
+	            "phone": "12345678978",
+	            "address": "广州",
+	            "price": 45,
+	            "isPayed": 0,
+	            "valid": 1,
+	            "isDeal": 1,
+	            "message": ""
+	        },
+	        {
+	            "order_id": 1997677335,
+	            "worker_id": 1,
+	            "user_id": 1,
+	            "order_time": "2017-06-30 10:59:44.601",
+	            "start_time": "2017-12-16",
+	            "end_time": "2017-12-2",
+	            "phone": "18819259257",
+	            "address": "广州",
+	            "price": 45,
+	            "isPayed": 0,
+	            "valid": 1,
+	            "isDeal": 1,
+	            "message": ""
+	        }
+	    ]
+	}
 没有订单
 
-	[]
+	{"list":[]}
 ## 支付订单 ##
 
 url ：[http://localhost:8080/PayOrder?orderId=1985173349&userId=1](http://localhost:8080/PayOrder?orderId=1985173349&userId=1)     
@@ -417,38 +419,40 @@ url [http://localhost:8080/GetAllOrder?id=1&type=2](http://localhost:8080/GetAll
 
 返回    
 	
-	[
-	    {
-	        "order_id": 1985173349,
-	        "worker_id": 1,
-	        "user_id": 1,
-	        "order_time": "2017-06-29 15:38:36.798",
-	        "start_time": "2017-12-16",
-	        "end_time": "2017-12-2",
-	        "phone": "18819259257",
-	        "address": "广州",
-	        "price": 45,
-	        "isPayed": 0,
-	        "valid": 0,
-	        "isDeal": 0,
-	        "message": ""
-	    },
-	    {
-	        "order_id": 1987021255,
-	        "worker_id": 1,
-	        "user_id": 1,
-	        "order_time": "2017-06-29 15:38:38.864",
-	        "start_time": "2017-12-16",
-	        "end_time": "2017-12-2",
-	        "phone": "12345678978",
-	        "address": "广州",
-	        "price": 45,
-	        "isPayed": 0,
-	        "valid": 1,
-	        "isDeal": 0,
-	        "message": ""
-	    }
-	]
+	{
+	    "list": [
+	        {
+	            "order_id": 1987021255,
+	            "worker_id": 1,
+	            "user_id": 1,
+	            "order_time": "2017-06-29 15:38:38.864",
+	            "start_time": "2017-12-16",
+	            "end_time": "2017-12-2",
+	            "phone": "12345678978",
+	            "address": "广州",
+	            "price": 45,
+	            "isPayed": 0,
+	            "valid": 1,
+	            "isDeal": 1,
+	            "message": ""
+	        },
+	        {
+	            "order_id": 1997677335,
+	            "worker_id": 1,
+	            "user_id": 1,
+	            "order_time": "2017-06-30 10:59:44.601",
+	            "start_time": "2017-12-16",
+	            "end_time": "2017-12-2",
+	            "phone": "18819259257",
+	            "address": "广州",
+	            "price": 45,
+	            "isPayed": 0,
+	            "valid": 1,
+	            "isDeal": 1,
+	            "message": ""
+	        }
+	    ]
+	}
 
 ## 处理订单 ##
 
@@ -726,22 +730,24 @@ url  [http://localhost:8080/GetWorker?type=GENDER&gender=1](http://localhost:808
 有数据   
 
 
-	[
-	    {
-	        "worker_id": 1,
-	        "name": "李锦雄",
-	        "age": 12,
-	        "gender": 1,
-	        "introduce": "",
-	        "phone": "123456789",
-	        "day_wage": 12,
-	        "hour_wage": 12
-	    }
-	]
+	{
+	    "list": [
+	        {
+	            "worker_id": 1,
+	            "name": "李锦雄",
+	            "age": 21,
+	            "gender": 1,
+	            "introduce": "",
+	            "phone": "18819259257",
+	            "day_wage": 16,
+	            "hour_wage": 12
+	        }
+	    ]
+	}
 
 没数据   
 	
-	[]
+	{"list":[]}
 
 ### 年龄 ###
 
@@ -754,21 +760,23 @@ url  [http://localhost:8080/GetWorker?type=AGE&min=&max=45](http://localhost:808
 	
 返回     
 	
-	[
-	    {
-	        "worker_id": 1,
-	        "name": "李锦雄",
-	        "age": 12,
-	        "gender": 1,
-	        "introduce": "",
-	        "phone": "123456789",
-	        "day_wage": 12,
-	        "hour_wage": 12
-	    }
-	]
+	{
+	    "list": [
+	        {
+	            "worker_id": 1,
+	            "name": "李锦雄",
+	            "age": 21,
+	            "gender": 1,
+	            "introduce": "",
+	            "phone": "18819259257",
+	            "day_wage": 16,
+	            "hour_wage": 12
+	        }
+	    ]
+	}
 或者   
 	
-	[]    
+	{"list":[]}   
 
 ### 时薪 ###
 
@@ -781,21 +789,23 @@ url [http://localhost:8080/GetWorker?type=HOUR_WAGE&min=&max=](http://localhost:
 
 返回     
 	
-	[
-	    {
-	        "worker_id": 1,
-	        "name": "李锦雄",
-	        "age": 12,
-	        "gender": 1,
-	        "introduce": "",
-	        "phone": "123456789",
-	        "day_wage": 12,
-	        "hour_wage": 12
-	    }
-	]
+	{
+	    "list": [
+	        {
+	            "worker_id": 1,
+	            "name": "李锦雄",
+	            "age": 21,
+	            "gender": 1,
+	            "introduce": "",
+	            "phone": "18819259257",
+	            "day_wage": 16,
+	            "hour_wage": 12
+	        }
+	    ]
+	}
 或者   
 	
-	[]  
+	{"list":[]}
 
 ### 日薪 ###
 
@@ -807,21 +817,25 @@ url  [http://localhost:8080/GetWorker?type=DAY_WAGE&min=&max=](http://localhost:
 
 返回     
 	
-	[
-	    {
-	        "worker_id": 1,
-	        "name": "李锦雄",
-	        "age": 12,
-	        "gender": 1,
-	        "introduce": "",
-	        "phone": "123456789",
-	        "day_wage": 12,
-	        "hour_wage": 12
-	    }
-	]
+	{
+	    "list": [
+	        {
+	            "worker_id": 1,
+	            "name": "李锦雄",
+	            "age": 21,
+	            "gender": 1,
+	            "introduce": "",
+	            "phone": "18819259257",
+	            "day_wage": 16,
+	            "hour_wage": 12
+	        }
+	    ]
+	}
 或者   
 	
-	[]     
+	{
+		"list":[]		
+	}     
 
 ## 修改护工的信息 ##
 
@@ -880,18 +894,20 @@ CareWorker 类
 
 返回    
 
-	[
-	    {
-	        "worker_id": 1,
-	        "name": "李锦雄",
-	        "age": 21,
-	        "gender": 1,
-	        "introduce": "",
-	        "phone": "18819259257",
-	        "day_wage": 16,
-	        "hour_wage": 12
-	    }
-	]
+	{
+	    "list": [
+	        {
+	            "worker_id": 1,
+	            "name": "李锦雄",
+	            "age": 21,
+	            "gender": 1,
+	            "introduce": "",
+	            "phone": "18819259257",
+	            "day_wage": 16,
+	            "hour_wage": 12
+	        }
+	    ]
+	}
 
 ## 根据护工 id 返回护工信息 ##
 
